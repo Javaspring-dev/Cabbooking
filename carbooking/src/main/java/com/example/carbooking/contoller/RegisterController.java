@@ -1,5 +1,6 @@
 package com.example.carbooking.contoller;
 
+import com.example.carbooking.dto.LoginDto;
 import com.example.carbooking.entities.RegisterEntity;
 import com.example.carbooking.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,15 @@ public class RegisterController {
         RegisterEntity savedEntity = registerService.create(registerEntity);
         return ResponseEntity.ok(savedEntity);
     }
-    @GetMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody String username, @RequestBody String password){
-        return ResponseEntity.ok(registerService.login(username,password));
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
+        boolean isAuthenticated = registerService.login(loginDto);
+        if (isAuthenticated) {
+            return ResponseEntity.ok("Login successful!");
+        } else {
+            return ResponseEntity.status(401).body("Invalid email or password");
+        }
+
     }
 }

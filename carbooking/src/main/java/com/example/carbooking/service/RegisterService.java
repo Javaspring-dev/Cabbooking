@@ -17,13 +17,11 @@ public class RegisterService {
 
         return registerRepository.save(registerEntity);
     }
-    public String login(String username, String password){
-        Optional<RegisterEntity> usernameoptional = registerRepository.findByUsername(username);
-        if (usernameoptional != null){
-            if (usernameoptional.get().getPassword()== password){
-                return usernameoptional.get().getUsertype();
-            }
-        }
-        return null;
+    public boolean login(LoginDto loginDto) {
+        Optional<RegisterEntity> registerEntity = registerRepository.findByUsername(loginDto.getUsername());
+        return registerEntity.isPresent() && registerEntity.get().getPassword().equals(loginDto.getPassword());
     }
+
+
+
 }
