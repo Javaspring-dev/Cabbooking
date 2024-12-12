@@ -17,11 +17,15 @@ public class RegisterService {
 
         return registerRepository.save(registerEntity);
     }
-    public boolean login(LoginDto loginDto) {
+    public String login(LoginDto loginDto) {
         Optional<RegisterEntity> registerEntity = registerRepository.findByUsername(loginDto.getUsername());
-        return registerEntity.isPresent() && registerEntity.get().getPassword().equals(loginDto.getPassword());
+        if (registerEntity.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
+        if (!registerEntity.get().getPassword().equals(loginDto.getPassword())) {
+            throw new RuntimeException("Invalid password");
+        }
+        return registerEntity.get().getUsertype();
     }
-
-
 
 }

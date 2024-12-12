@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface RegisterRepository extends JpaRepository<RegisterEntity,Long> {
     Optional<RegisterEntity> findByUsername(String username);
+
 }

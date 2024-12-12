@@ -7,7 +7,7 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "register")
+@Table(name = "Register")
 public class RegisterEntity {
     //register entity
     @Id

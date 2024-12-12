@@ -3,7 +3,7 @@ package com.example.carbooking.dto;
 public class LoginDto {
     private String username;
     private String Password;
-
+private String usertype;
     public String getUsername() {
         return username;
     }
@@ -18,5 +18,13 @@ public class LoginDto {
 
     public void setPassword(String password) {
         Password = password;
+    }
+
+    public String getUsertype() {
+        return usertype;
+    }
+
+    public void setUsertype(String usertype) {
+        this.usertype = usertype;
     }
 }
