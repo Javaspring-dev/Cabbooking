@@ -4,10 +4,7 @@ import com.example.carbooking.entities.RegisterEntity;
 import com.example.carbooking.entities.UserEntity;
 import com.example.carbooking.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
@@ -23,6 +20,10 @@ public class UserController {
     {
         UserEntity SavedEntity=userService.create(userEntity);
         return ResponseEntity.ok(SavedEntity);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getById(@PathVariable int id){
+        return ResponseEntity.ok().body(userService.getById(id));
     }
 
 

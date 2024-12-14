@@ -4,6 +4,8 @@ import com.example.carbooking.entities.UserEntity;
 import com.example.carbooking.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -15,6 +17,14 @@ public class UserService {
 
     public UserEntity create(UserEntity userEntity){
         return userRepository.save(userEntity);
+    }
+
+    public Object getById(int id){
+        Optional<UserEntity> FindById = userRepository.findByCustomerid(id);
+        if (FindById.isPresent()){
+            return userRepository.findByCustomerid(id);
+        }
+        return null;
     }
     }
 

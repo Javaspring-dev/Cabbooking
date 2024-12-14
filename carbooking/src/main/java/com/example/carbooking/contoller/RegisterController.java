@@ -30,12 +30,9 @@ public class RegisterController {
         try {
             String userType = registerService.login(loginDto);
 
-            // Generate token based on user type
             String token = userType.equalsIgnoreCase("driver")
                     ? "dummy-driver-token-123"
                     : "dummy-user-token-456";
-
-            // Return response
             Map<String, String> response = new HashMap<>();
             response.put("message", "Login successful");
             response.put("userType", userType);
