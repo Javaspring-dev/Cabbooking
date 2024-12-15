@@ -1,5 +1,6 @@
 package com.example.carbooking.service;
 
+import com.example.carbooking.Exception.ConflictException;
 import com.example.carbooking.dto.LoginDto;
 import com.example.carbooking.entities.RegisterEntity;
 import com.example.carbooking.repository.RegisterRepository;
@@ -10,20 +11,24 @@ import java.util.Optional;
 
 @Service
 public class RegisterService {
+
     @Autowired
     private RegisterRepository registerRepository;
 
     public  RegisterEntity create(RegisterEntity registerEntity){
-
+        Optional<RegisterEntity>username=registerRepository.findByUsername(registerEntity.getUsername());
+        if(username.isPresent()){
+            throw new ConflictException("user already exists");
+        }
         return registerRepository.save(registerEntity);
     }
     public String login(LoginDto loginDto) {
         Optional<RegisterEntity> registerEntity = registerRepository.findByUsername(loginDto.getUsername());
         if (registerEntity.isEmpty()) {
-            throw new RuntimeException("User not found");
+            throw new ConflictException("User not found");
         }
         if (!registerEntity.get().getPassword().equals(loginDto.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            throw new ConflictException("Invalid password");
         }
         return registerEntity.get().getUsertype();
     }

@@ -4,6 +4,7 @@ public class LoginDto {
     private String username;
     private String Password;
 private String usertype;
+
     public String getUsername() {
         return username;
     }

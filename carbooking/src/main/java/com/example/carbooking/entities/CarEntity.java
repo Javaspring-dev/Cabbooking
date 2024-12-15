@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class CarEntity {
 
    @Id
-
+@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String registrationnumber;
     private boolean availability;

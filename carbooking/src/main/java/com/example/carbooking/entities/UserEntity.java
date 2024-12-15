@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "User")
 public class UserEntity {
     @Id
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int customerid;
     private Long contactnumber;
     private String emailaddress;

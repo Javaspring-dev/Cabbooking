@@ -12,30 +12,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/register")
 public class RegisterController {
     @Autowired
     private RegisterService registerService;
-
 
     @PostMapping("/create")
     public ResponseEntity<RegisterEntity> createRegister(@RequestBody RegisterEntity registerEntity) {
         RegisterEntity savedEntity = registerService.create(registerEntity);
         return ResponseEntity.ok(savedEntity);
     }
-
-
  @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody LoginDto loginDto) {
         try {
             String userType = registerService.login(loginDto);
+            String username= registerService.login(loginDto);
 
             String token = userType.equalsIgnoreCase("driver")
-                    ? "dummy-driver-token-123"
-                    : "dummy-user-token-456";
+                    ? "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlcm5hbWUiOiJnb2t1bCIsInVzZXJ0eXBlIjoiRFJJVkVSIiwiaWF0IjoxNTE2MjM5MDIyfQ.gvCCHa30B628-j3cUFjTBrpX2yXGX75t5QS6TNRURuCYVSg-ygh74tpHBeZ9cl-hfP2iv7l_Y8Gql0WqRCXy0g"
+                    : "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlcm5hbWUiOiJwdWdhbCIsInVzZXJ0eXBlIjoiVVNFUiIsImlhdCI6MTUxNjIzOTAyMn0.4D6lEN-mwsNG_-NP4ZoUxcL_Sh8-w-e-hmf-145H2SASRlqd1vbGUAwI8HJEdDbRQLXApWCjVJvaqUjioxM_BQ";
             Map<String, String> response = new HashMap<>();
             response.put("message", "Login successful");
             response.put("userType", userType);
+            response.put("username", username);
             response.put("token", token);
 
             return ResponseEntity.ok(response);
