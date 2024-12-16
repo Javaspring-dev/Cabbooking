@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/car")
+@RequestMapping("/api/cars")
 public class CarController {
     @Autowired
     private CarService carService;
     @PostMapping("/create")
-    public ResponseEntity<CarEntity> create(@RequestBody CarEntity carEntity) {
-        CarEntity savedEntity = carService.create(carEntity);
-        return ResponseEntity.ok(savedEntity);
+    public CarEntity createCar(@RequestBody CarEntity carEntity) {
+        return carService.create(carEntity);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getById(@PathVariable int id){
-        return ResponseEntity.ok().body(carService.getById(id));
-    }
+    public CarEntity getCarById(@PathVariable Long id) {
+        return (CarEntity) carService.getById(id);
+}
+
 }

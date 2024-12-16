@@ -25,20 +25,15 @@ public class RegisterController {
  @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody LoginDto loginDto) {
         try {
-            String userType = registerService.login(loginDto);
-            String username= registerService.login(loginDto);
-
+            Map<String, Object> userDetails = registerService.login(loginDto);
+            String userType = (String) userDetails.get("userType");
             String token = userType.equalsIgnoreCase("driver")
                     ? "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlcm5hbWUiOiJnb2t1bCIsInVzZXJ0eXBlIjoiRFJJVkVSIiwiaWF0IjoxNTE2MjM5MDIyfQ.gvCCHa30B628-j3cUFjTBrpX2yXGX75t5QS6TNRURuCYVSg-ygh74tpHBeZ9cl-hfP2iv7l_Y8Gql0WqRCXy0g"
                     : "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlcm5hbWUiOiJwdWdhbCIsInVzZXJ0eXBlIjoiVVNFUiIsImlhdCI6MTUxNjIzOTAyMn0.4D6lEN-mwsNG_-NP4ZoUxcL_Sh8-w-e-hmf-145H2SASRlqd1vbGUAwI8HJEdDbRQLXApWCjVJvaqUjioxM_BQ";
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Login successful");
-            response.put("userType", userType);
-            response.put("username", username);
-            response.put("token", token);
 
-            return ResponseEntity.ok(response);
-
+            // Add the token to the response
+            userDetails.put("token", token);
+            return ResponseEntity.ok(userDetails);
         } catch (RuntimeException e) {
             return ResponseEntity.status(401).body(e.getMessage());
         }

@@ -6,10 +6,14 @@ import jakarta.persistence.*;
 @Table(name = "Car")
 public class CarEntity {
 
-   @Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
-    private String registrationnumber;
+
+    @Column(name = "registrationnumber")
+    private String registrationNumber;
+
     private boolean availability;
     private String brand;
     private String model;
@@ -22,12 +26,13 @@ public class CarEntity {
         this.id = id;
     }
 
-    public String getRegistrationnumber() {
-        return registrationnumber;
+    public String getRegistrationNumber() {
+
+        return registrationNumber;
     }
 
-    public void setRegistrationnumber(String registrationnumber) {
-        this.registrationnumber = registrationnumber;
+    public void setRegistrationNumber(String registrationNumber) {
+        this.registrationNumber = registrationNumber;
     }
 
     public boolean isAvailability() {
@@ -54,3 +59,4 @@ public class CarEntity {
         this.model = model;
     }
 }
+

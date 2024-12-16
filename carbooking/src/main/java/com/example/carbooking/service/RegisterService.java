@@ -7,6 +7,8 @@ import com.example.carbooking.repository.RegisterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -22,7 +24,7 @@ public class RegisterService {
         }
         return registerRepository.save(registerEntity);
     }
-    public String login(LoginDto loginDto) {
+    public Map<String, Object> login(LoginDto loginDto) {
         Optional<RegisterEntity> registerEntity = registerRepository.findByUsername(loginDto.getUsername());
         if (registerEntity.isEmpty()) {
             throw new ConflictException("User not found");
@@ -30,7 +32,13 @@ public class RegisterService {
         if (!registerEntity.get().getPassword().equals(loginDto.getPassword())) {
             throw new ConflictException("Invalid password");
         }
-        return registerEntity.get().getUsertype();
+        RegisterEntity user = registerEntity.get();
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", user.getId());
+        response.put("userType", user.getUsertype());
+        response.put("username", user.getUsername());
+
+        return response;
     }
 
 }

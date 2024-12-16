@@ -10,18 +10,26 @@ import java.util.Optional;
 
 @Service
 public class CarService {
-
+    @Autowired
     private CarRepository carRepository;
 
+
+
     public CarEntity create(CarEntity carEntity) {
+        Optional<CarEntity> existingCar = carRepository.findByRegistrationNumber(carEntity.getRegistrationNumber());
+        if (existingCar.isPresent()) {
+
+            throw new ConflictException("Car with registration number " + carEntity.getRegistrationNumber() + " already exists.");
+        }
         return carRepository.save(carEntity);
     }
 
-    public Object getById(int id){
-        Optional<CarEntity> FindById = carRepository.findById(id);
-        if (FindById.isPresent()){
-            return carRepository.findById(id);
+
+    public CarEntity getById(Long id) {
+        Optional<CarEntity> foundCar = carRepository.findById(id);
+        if (foundCar.isPresent()) {
+            return foundCar.get();
         }
-         throw new ConflictException("Create the call details");
+        throw new ConflictException("Car with ID " + id + " not found.");
     }
 }

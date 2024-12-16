@@ -3,7 +3,16 @@ package com.example.carbooking.dto;
 public class LoginDto {
     private String username;
     private String Password;
-private String usertype;
+    private String usertype;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
